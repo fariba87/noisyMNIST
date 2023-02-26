@@ -1,0 +1,39 @@
+1) augment_class_wise.py----> to augment just classes: 2, 5, 8 by augmentor library
+
+2) data_load.py-------------> read file from train and test folder extract labels and preprocess input
+			      I create a function to choose between different options for output data:
+				1) just resize
+				2) resize and preprocess
+				3) resize and Upsample by SMOTE
+				4) resize and Upsample and preprocess
+				5) augment data (class-size)
+3) Image_Preprocessing.py --> preprocess to reduce noise
+
+4) raw_model.py-------------> raw model without any regularization
+
+5) utils.py ---------------> utility functions
+
+6) model_regularized.py----> regularized model
+
+7) denoisingAE.py----------> try denoising AE for feature extraction (decoder output) !! not works
+
+8) evaluation.py-----------> evaluation based on scikit learn
+
+9) tryrandomforest.py------> check RF
+
+10) try_with_tf_data_pipeline.py---> tf.data.Dataset pipeline
+
+11) train.py---------------> for compile and fit
+                              - get data from load_label (with different options)
+			      - normalize(both) and shuffle(only train)
+			      - choose between raw or regularized model
+		              - compile and fit based on different options:
+				   - normal fit
+				   - fit by class weight
+				   - fit by local loss
+				   - kfoldCV
+				   - based on ImageDataGenerator
+12) InferenceClass.py------> as requested
+			     
+
+											
