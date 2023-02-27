@@ -1,5 +1,6 @@
-The Project procedure :  Multiclass Classification 
- 1) analyzing the dataset :
+# Multiclass Classification 
+## analyzing the dataset :
+ 
 	- it is imbalanced --> possible solutions: 
 				- traditional machine learning such as RandomForest which also can consider imbalance dataset (needs finetuning hyperparameter)
 				- upsampling or downsampling
@@ -15,14 +16,14 @@ The Project procedure :  Multiclass Classification
 				- whatever chosen, should also applied to test test
 				- i create a function to chooose the input[different options] for the deep model
 				- sizes changes between H: constant=32 W: (9~28)
-2)  Model Architecture :
+##  Model Architecture :
 	- Given for intermediate layer
 	- preprocessing : just as said above
 	- postprocessing :
 		 - Global average pooling (less parameters) or Flatten (more parameters)
 		 - Dense layer with 10 neurons
 		 - but it was said dont use any trainable layer : i dont know if Dense layer is accepted or not
-3) Model compile and fit:
+## Model compile and fit:
 	- loss function : possible solutions: 
 		- CategoricalCrossentropy 
 		- focal loss (better for imbalanced dataset)
@@ -31,8 +32,7 @@ The Project procedure :  Multiclass Classification
 		- Categoricalaccuracy
 		- since it is imbalance data : precision , auc, ... 
 	- i create a function to choose between different options (normal fitting, fit by class weight , fit in kfold cross val , fit with imagedatagenerator)
-##############################################################################################################################
-First try :
+## First try :
     - choose raw model 
     - choose raw dataset (just resized and normalized)
     - split train dataset to train and val
@@ -47,10 +47,11 @@ First try :
 						  - fixing optimization algorithm(train for more epoch- change lr- SVM[hinge loss]
 						  - Dropout , BN, weight decay 
 now lets try different approaches based on some tricks mentioned as the following:
-##############################################################################################################################
-tricks:
 
- 1) one time setup:  1) activation functions: Given for all the layers , expect the last : which I chose implicitely as softmax (from_logits=True in CategoricalCrossentropy loss)
+## tricks:
+
+ ### one time setup:  
+ 	             1) activation functions: Given for all the layers , expect the last : which I chose implicitely as softmax (from_logits=True in CategoricalCrossentropy loss)
 		     2) data preprocess: 
 			- handcrafted preprocess
 			- normaliazation (zero_centered , unit variance , scaling to [0-1]
@@ -82,7 +83,8 @@ tricks:
 				- usually after activation 
 				- it causes training learning curve more noisy
 
-2) Training Dynamics: 1) learning rate scheduler:
+### Training Dynamics: 
+		      1) learning rate scheduler:
 			  - if it is tried: better to turn on weight decay (and epochs~100)
 			  - usually not applied for ADAM (but i applied) :start from 0.001 and decreases
 		          - high learning rate leads to nan loss , and low learing rate causes a plateau
@@ -98,13 +100,13 @@ tricks:
 	                  using this set of hyperparameters for longer epochs (without LR decay)
 		      5) cross validation:
 			  train several models in parallel, and save the best model checkpoint 
-3) after training 
+### after training 
 		      1) model ensembles:
 			  - we can save several checkpoints of model during train and average them
 		      2) transfer learning
 			 
- ##############################################################################################################################
-analyzing learning curves:
+ 
+## analyzing learning curves:
    1) if loss is in plateau:
 	- maybe learning rate is so slow
 	- maybe inappropriate wight initialization (it slows down training process) [if so high : explode - if so low: vanish]
